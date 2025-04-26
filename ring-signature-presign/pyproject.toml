@@ -1,0 +1,11 @@
+[project]
+name = "dilithium"
+version = "0.1.0"
+description = "Implementation of CRYSTALS-DILITHIUM"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=2.1.2",
+    "pycryptodome>=3.21.0",
+    "ruff>=0.7.1",
+]
