@@ -1,1 +1,1 @@
-# More-Efficient-Construction-of-Ring-Signatures-
+# More-Efficient-Construction-of-Ring-Signatures
