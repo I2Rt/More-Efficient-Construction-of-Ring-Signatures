@@ -1,5 +1,5 @@
 """
-Optimized Polynomial Ring Implementation for Dilithium using NumPy
+Optimized Polynomial Ring Implementation using NumPy
 
 Key optimizations:
 1. Vectorized operations using numpy

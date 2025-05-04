@@ -1,5 +1,5 @@
 """
-Optimized SHAKE128 Implementation for Dilithium
+Optimized SHAKE128 Implementation
 
 Key optimizations:
 1. Batch operations with numpy
