@@ -1,7 +1,7 @@
 [project]
-name = "dilithium"
+name = "ring-signature"
 version = "0.1.0"
-description = "Implementation of CRYSTALS-DILITHIUM"
+description = "Implementation of Ring-Signature"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
