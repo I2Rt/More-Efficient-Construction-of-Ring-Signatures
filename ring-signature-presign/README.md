@@ -1,76 +1,4 @@
-# Optimized Dilithium Implementation
-
-## Overview
-
-This repository attempts at creating a highly optimized implementation of the CRYSTALS-Dilithium post-quantum digital signature scheme.
-
-Currently, it achieves the following metrics (tested on standard hardware):
-
-There's still a lot of room to improve on performance using GPU acceleration.
-
-```
-Performance Summary:
-------------------
-Key Generation:    65.80 ms
-Signing Time:      81.17 ms
-Verify Time:        0.28 ms
-Total Time:       147.25 ms
-```
-
-Note: There are inaccuracies, the bounds are very extremely relaxed for learning purposes.
-
-## Mathematical Foundation
-
-### Ring Structure
-
-We work in the polynomial ring Rq = Zq[X]/(X^n + 1) where:
-
-- q = 2^23 - 2^13 + 1 = 8,380,417 (Carefully chosen prime for efficient NTT)
-- n = 256 (Power of 2 for efficient NTT operations)
-
-The choice of these parameters enables:
-
-1. Efficient modular reduction
-2. Fast NTT-based polynomial multiplication
-3. Optimal security-performance tradeoff
-
-### Parameter Sets
-
-We implement three security levels following NIST standards:
-
-```
-PARAMS = {
-    2: {"k": 4, "l": 4, "eta": 2},  # NIST Security Level 2
-    3: {"k": 6, "l": 5, "eta": 4},  # NIST Security Level 3
-    5: {"k": 8, "l": 7, "eta": 2},  # NIST Security Level 5
-}
-```
-
-### Core Operations
-
-The scheme consists of three main algorithms:
-
-1. **Key Generation**:
-
-   - Generate random seed rho
-   - Derive matrix A in Rq^(k×l) from rho
-   - Sample small polynomials s1 in S_eta^l, s2 in S_eta^k
-   - Compute t = As1 + s2
-   - Output (rho,t) as public key and (s1,s2) as secret key
-
-2. **Signing**:
-
-   - Sample y with coefficients in [-gamma1, gamma1]
-   - Compute w = Ay
-   - Generate challenge c using w
-   - Compute z = y + cs1
-   - Output signature (z,c,w)
-
-3. **Verification**:
-
-   - Check that infinity norm of z < gamma1 - beta
-   - Verify challenge reconstruction
-   - Check bounds on w
+# Ring Signature Implementation
 
 ## Optimizations
 
@@ -78,16 +6,9 @@ The scheme consists of three main algorithms:
 
 ```python
 class Polynomial:
-    N = 256
-    Q = 8380417  # 2^23 - 2^13 + 1
+    N = 64
+    Q = 2^29
 ```
-
-Key optimizations:
-
-- Vectorized operations using NumPy for all polynomial arithmetic
-- Pre-allocated numpy arrays for coefficient storage
-- Cached helper arrays for multiplication
-- Efficient modular reduction using the special form of q
 
 ### 2. Matrix Operations
 
